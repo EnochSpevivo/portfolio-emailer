@@ -8,7 +8,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors({
-    origin: process.env.WHITELISTED_ORIGIN,
+    origin: process.env.WHITELISTED_ORIGINS?.split(', '),
 }));
 
 dotenv.config();
@@ -46,6 +46,7 @@ app.post('/send-email', (req, res) => {
         }
 
         res.status(500).json({ message: 'error sending email' });
+        console.log({ error: info });
         return;
     })();
 });
